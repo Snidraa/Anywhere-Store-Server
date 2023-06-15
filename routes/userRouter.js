@@ -13,7 +13,8 @@ router.post(
 );
 router.post('/login', userController.login);
 router.post('/logout', userController.logout);
-router.put('/', checkRole('ADMIN'), userController.setRole);
+router.put('/role', checkRole('ADMIN'), userController.setRole);
+router.put('/avatar', userController.setAvatarImage);
 
 router.get('/refresh', userController.refresh);
 router.get('/', checkRole('ADMIN'), userController.getUsers);

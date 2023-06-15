@@ -7,7 +7,7 @@ const getRatingData = require('../middlewares/getRatingData');
 class DeviceService {
 	async create(name, price, brandId, typeId, info, img) {
 		let fileName = uuid.v4() + '.jpg';
-		img.mv(path.resolve(__dirname, '..', 'static', fileName));
+		img.mv(path.resolve(__dirname, '..', 'static', 'device', `${typeId}`, fileName));
 
 		const device = await Device.create({ name, price, brandId, typeId, img: fileName });
 

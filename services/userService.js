@@ -1,3 +1,5 @@
+const uuid = require('uuid');
+const path = require('path');
 const bcrypt = require('bcrypt');
 const tokenService = require('./tokenService');
 const UserDto = require('../dtos/user-dto');
@@ -105,6 +107,15 @@ class UserService {
 		await tokenService.saveToken(userDto.id, tokens.refreshToken);
 
 		return { ...tokens, user: userDto };
+	}
+
+	async setAvatarImage(id, img) {
+		let fileName = uuid.v4() + '.jpg';
+		img.mv(path.resolve(__dirname, '..', 'static', 'avatar', fileName));
+
+		const avatarImage = await User.update({ img: fileName }, { where: { id } });
+		const user = await User.findOne({ where: { id } });
+		return user;
 	}
 }
 

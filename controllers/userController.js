@@ -19,7 +19,7 @@ class UserController {
 			res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
 			return res.json(userData);
 		} catch (error) {
-			next(error);
+			next(ApiError.badRequest(error.message));
 		}
 	}
 
@@ -30,7 +30,7 @@ class UserController {
 			res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
 			return res.json(userData);
 		} catch (error) {
-			next(error);
+			next(ApiError.badRequest(error.message));
 		}
 	}
 
@@ -46,7 +46,7 @@ class UserController {
 			res.clearCookie('refreshToken');
 			return res.json(token);
 		} catch (error) {
-			next(error);
+			next(ApiError.badRequest(error.message));
 		}
 	}
 
@@ -57,7 +57,7 @@ class UserController {
 			res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
 			return res.json(userData);
 		} catch (error) {
-			next(error);
+			next(ApiError.badRequest(error.message));
 		}
 	}
 
@@ -67,7 +67,18 @@ class UserController {
 			const userData = await userService.setRole(id, role);
 			return res.json(userData);
 		} catch (error) {
-			next(error);
+			next(ApiError.badRequest(error.message));
+		}
+	}
+
+	async setAvatarImage(req, res, next) {
+		try {
+			const { id } = req.body;
+			const { img } = req.files;
+			const user = await userService.setAvatarImage(id, img);
+			return res.json(user);
+		} catch (error) {
+			next(ApiError.badRequest(error.message));
 		}
 	}
 
@@ -76,7 +87,7 @@ class UserController {
 			const users = await userService.getAllUsers();
 			return res.json(users);
 		} catch (error) {
-			next(error);
+			next(ApiError.badRequest(error.message));
 		}
 	}
 
@@ -86,7 +97,7 @@ class UserController {
 			const user = await userService.deleteUser(id);
 			return res.json(user);
 		} catch (error) {
-			next(error);
+			next(ApiError.badRequest(error.message));
 		}
 	}
 }
