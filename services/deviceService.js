@@ -1,6 +1,6 @@
 const uuid = require('uuid');
 const path = require('path');
-const { Device, DeviceInfo, Rating } = require('../models/models');
+const { Device, DeviceInfo, Rating, Review } = require('../models/models');
 const ApiError = require('../exeptions/api-error');
 const getRatingData = require('../middlewares/getRatingData');
 
@@ -60,7 +60,7 @@ class DeviceService {
 	}
 
 	async updateRating(id) {
-		const ratingData = await Rating.findAndCountAll({ where: { deviceId: id } });
+		const ratingData = await Review.findAndCountAll({ where: { deviceId: id } });
 		const { rate, ratesCount } = getRatingData(ratingData);
 		await Device.update({ rating: rate, ratesCount: ratesCount }, { where: { id } });
 		const device = await Device.findOne({ where: { id } });

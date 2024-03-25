@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const tokenService = require('./tokenService');
 const UserDto = require('../dtos/user-dto');
 const ApiError = require('../exeptions/api-error');
-const { User, Basket, Role } = require('../models/models');
+const { User, Basket, Role, Wishlist } = require('../models/models');
 
 class UserService {
 	async registration(email, role = 'USER', password) {
@@ -19,6 +19,7 @@ class UserService {
 		await user.addRole(userRole);
 
 		const basket = await Basket.create({ userId: user.id });
+		const wishlist = await Wishlist.create({ userId: user.id });
 
 		const userDto = new UserDto(user, [userRole.name]);
 		const tokens = tokenService.generateTokens({ ...userDto });

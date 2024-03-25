@@ -1,5 +1,5 @@
 const sequelize = require('../db');
-const { DataTypes } = require('sequelize');
+const { DataTypes, BOOLEAN } = require('sequelize');
 
 const User = sequelize.define('user', {
 	id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -28,13 +28,14 @@ const Basket = sequelize.define('basket', {
 
 const BasketDevice = sequelize.define('basket_device', {
 	id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+	count: { type: DataTypes.INTEGER },
 });
 
-const Favorite = sequelize.define('favorite', {
+const Wishlist = sequelize.define('wishlist', {
 	id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
 
-const FavoriteDevice = sequelize.define('favorite_device', {
+const WishlistDevice = sequelize.define('wishlist_device', {
 	id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
 
@@ -57,9 +58,11 @@ const Brand = sequelize.define('brand', {
 	name: { type: DataTypes.STRING, unique: true, allowNull: false },
 });
 
-const Rating = sequelize.define('rating', {
+const Review = sequelize.define('review', {
 	id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 	rate: { type: DataTypes.INTEGER, allowNull: false },
+	comment: { type: DataTypes.STRING, allowNull: false },
+	confirmed: { type: BOOLEAN, defaultValue: false },
 });
 
 const DeviceInfo = sequelize.define('device_info', {
@@ -75,20 +78,20 @@ const TypeBrand = sequelize.define('type_brand', {
 User.hasOne(Token);
 Token.belongsTo(User);
 
-User.hasMany(Rating);
-Rating.belongsTo(User);
+User.hasMany(Review);
+Review.belongsTo(User);
 
 User.hasOne(Basket);
 Basket.belongsTo(User);
 
-User.hasOne(Favorite);
+User.hasOne(Wishlist);
 Basket.belongsTo(User);
 
 Basket.hasMany(BasketDevice);
 BasketDevice.belongsTo(Basket);
 
-Favorite.hasMany(FavoriteDevice);
-FavoriteDevice.belongsTo(Favorite);
+Wishlist.hasMany(WishlistDevice);
+WishlistDevice.belongsTo(Wishlist);
 
 Type.hasMany(Device);
 Device.belongsTo(Type);
@@ -96,14 +99,14 @@ Device.belongsTo(Type);
 Brand.hasMany(Device);
 Device.belongsTo(Brand);
 
-Device.hasMany(Rating);
-Rating.belongsTo(Device);
+Device.hasMany(Review);
+Review.belongsTo(Device);
 
 Device.hasMany(BasketDevice);
 BasketDevice.belongsTo(Device);
 
-Device.hasMany(FavoriteDevice);
-FavoriteDevice.belongsTo(Device);
+Device.hasMany(WishlistDevice);
+WishlistDevice.belongsTo(Device);
 
 Device.hasMany(DeviceInfo, { as: 'info' });
 DeviceInfo.belongsTo(Device);
@@ -121,12 +124,12 @@ module.exports = {
 	Token,
 	Basket,
 	BasketDevice,
-	Favorite,
-	FavoriteDevice,
+	Wishlist,
+	WishlistDevice,
 	Device,
 	Type,
 	Brand,
-	Rating,
+	Review,
 	TypeBrand,
 	DeviceInfo,
 };

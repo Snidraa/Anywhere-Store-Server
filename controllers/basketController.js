@@ -3,8 +3,8 @@ const basketService = require('../services/basketService');
 class BasketController {
 	async addDevice(req, res, next) {
 		try {
-			const { basketId, deviceId } = req.query;
-			const deviceData = await basketService.addDevice(basketId, deviceId);
+			const { basketId, deviceId, count } = req.query;
+			const deviceData = await basketService.addDevice(basketId, deviceId, count);
 			return res.json(deviceData);
 		} catch (error) {
 			next(error);
@@ -23,8 +23,8 @@ class BasketController {
 
 	async removeDevice(req, res, next) {
 		try {
-			const { basketId, deviceId } = req.query;
-			const device = await basketService.removeDevice(basketId, deviceId);
+			const { basketId, deviceId, count } = req.query;
+			const device = await basketService.removeDevice(basketId, deviceId, count);
 			return res.json(device);
 		} catch (error) {
 			next(error);

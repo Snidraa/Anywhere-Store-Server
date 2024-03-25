@@ -6,8 +6,8 @@ const roleRouter = require('./roleRouter');
 const brandRouter = require('./brandRouter');
 const typeRouter = require('./typeRouter');
 const basketRouter = require('./basketRouter');
-const favoriteRouter = require('./favoriteRouter');
-const ratingRouter = require('./ratingRouter');
+const wishlistRouter = require('./wishlistRouter');
+const reviewRouter = require('./reviewRouter');
 
 router.use('/user', userRouter);
 router.use('/role', roleRouter);
@@ -15,7 +15,7 @@ router.use('/type', typeRouter);
 router.use('/brand', brandRouter);
 router.use('/device', deviceRouter);
 router.use('/basket', basketRouter);
-router.use('/favorite', favoriteRouter);
-router.use('/rating', ratingRouter);
+router.use('/wishlist', wishlistRouter);
+router.use('/review', reviewRouter);
 
 module.exports = router;

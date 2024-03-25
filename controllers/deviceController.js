@@ -1,6 +1,6 @@
 const ApiError = require('../exeptions/api-error');
 const deviceService = require('../services/deviceService');
-const ratingService = require('../services/ratingService');
+const ratingService = require('../services/reviewService');
 
 class DeviceController {
 	async create(req, res, next) {
