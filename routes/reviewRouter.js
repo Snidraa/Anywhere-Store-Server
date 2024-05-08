@@ -1,11 +1,11 @@
-const Router = require('express');
+const Router = require("express");
 const router = new Router();
-const reviewController = require('../controllers/reviewController');
-const checkRole = require('../middlewares/check-role-middleware');
+const reviewController = require("../controllers/reviewController");
+const checkRole = require("../middlewares/check-role-middleware");
 
-router.post('/', reviewController.addReview);
-router.update('/', reviewController.confirmReview);
+router.post("/", reviewController.addReview);
+router.put("/", reviewController.confirmReview);
 
-router.delete('/', reviewController.removeReview);
+router.delete("/", reviewController.removeReview);
 
 module.exports = router;
